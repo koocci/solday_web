@@ -14,6 +14,6 @@ export default {
 
 <style scoped>
 #Booth {
-  background: #567856; 
+  background: #F3E4E7; 
 }
 </style>

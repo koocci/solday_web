@@ -14,6 +14,6 @@ export default {
 
 <style scoped>
 #Map {
-  background: #ABCABC; 
+  background: #F8F1E9; 
 }
 </style>

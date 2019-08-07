@@ -14,6 +14,6 @@ export default {
 
 <style scoped>
 #Seminar {
-  background: #584562; 
+  background: #91E0F4; 
 }
 </style>

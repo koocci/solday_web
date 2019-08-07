@@ -3,26 +3,15 @@
     <v-card class="overflow-hidden">
       <v-app-bar
         app
-        absolute
-        color="#6A76AB"
+        fixed
+        color="#0C90AD"
         dark
-        shrink-on-scroll
-        prominent
-        src="https://picsum.photos/1920/1080?random"
-        fade-img-on-scroll
-        scroll-target="#content-sheet"
+        id="app-bar"
       >
-        <template v-slot:img="{ props }">
-          <v-img
-            v-bind="props"
-            gradient="to top right, rgba(100,115,201,.7), rgba(25,32,72,.7)"
-          ></v-img>
-        </template>
-  
         <v-app-bar-nav-icon></v-app-bar-nav-icon>
-  
+
         <v-toolbar-title>{{title}}</v-toolbar-title>
-  
+
         <v-spacer></v-spacer>
   
         <template v-slot:extension>
@@ -46,7 +35,8 @@
         id="content-sheet"
         class="overflow-y-auto"
       >
-        <v-container id="main-container">
+        <v-container
+        >
           <v-content>
             <Intro/>
             <Seminar/>
@@ -95,10 +85,10 @@ export default {
   }),
   methods: {
     goToScroll: (_id) => {
-      const main_container = document.getElementById('main-container');
-      console.log(main_container.offsetTop);
-      document.getElementById(_id).scrollTop = main_container.offsetTop;
-      // document.getElementById(_id).scrollIntoView(true);
+      window.scrollTo({
+        top: document.getElementById(_id).offsetTop,
+        behavior: "smooth"
+      });
     },
   }
 };
