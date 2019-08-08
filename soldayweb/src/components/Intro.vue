@@ -1,6 +1,6 @@
 <template>
   <div id="Intro"  class="components-size">
-    THIS IS INTRO
+    
   </div>
 </template>
 
