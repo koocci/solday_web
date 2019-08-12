@@ -1,6 +1,6 @@
 <template>
   <div id="Seminar"  class="components-size">
-    THIS IS Seminar
+    
   </div>
 </template>
 

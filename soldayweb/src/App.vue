@@ -9,7 +9,7 @@
         <v-list-item
           v-for="item in tabs"
           :key="item.id"
-          @click="goToScroll(item.title); drawer = !drawer; selectedTab = item.id;"
+          @click="goToScroll(item.title, addScrollEvent); drawer = !drawer; selectedTab = item.id;"
         >
           <v-list-item-action>
             <v-icon>{{item.icon}}</v-icon>
@@ -46,7 +46,7 @@
             v-for="item in tabs"
             :key="item.id"
             :id="'tab-' + item.id"
-            @click="goToScroll(item.title)"
+            @click="goToScroll(item.title, addScrollEvent);"
           >
             {{item.title}}
           </v-tab>
@@ -128,14 +128,21 @@ export default {
     ],
   }),
   methods: {
-    goToScroll: function(_id) {
-      // async await 사용
-      window.removeEventListener('scroll', this.setActiveTabChangeByScroll);
+    goToScroll: function(title, callback) {
+      this.removeScrollEvent();
+      const onScroll = function () {
+        const scrollTop = window.scrollTop || window.pageYOffset
+        if (scrollTop === document.getElementById(title).offsetTop) {
+            window.removeEventListener('scroll', onScroll)
+            callback()
+        }
+      }
+
+      window.addEventListener('scroll', onScroll)
       window.scrollTo({
-        top: document.getElementById(_id).offsetTop,
+        top: document.getElementById(title).offsetTop,
         behavior: "smooth"
       });
-      window.addEventListener('scroll', this.setActiveTabChangeByScroll);
     },
     setActiveTabChangeByScroll: function() {
       let tabOffsetTops = Array();
@@ -147,22 +154,30 @@ export default {
 
       while (index < tabOffsetTops.length -1) {
         if (tabOffsetTops[index] <= window.scrollY && window.scrollY < tabOffsetTops[index+1]){
-          this.selectedTab = index;
           lastTabFlag = false;
-          break;
+          break; 
         }
         index ++;
       }
       if (lastTabFlag) {
-        this.selectedTab = tabOffsetTops.length -1;
+        this.selectedTab = tabOffsetTops.length - 1;
+      }
+      else {
+        this.selectedTab = index;
       }
     },
+    addScrollEvent: function() {
+      window.addEventListener('scroll', this.setActiveTabChangeByScroll);
+    },
+    removeScrollEvent: function() {
+      window.removeEventListener('scroll', this.setActiveTabChangeByScroll);
+    }
   },
   created: function() {
-    window.addEventListener('scroll', this.setActiveTabChangeByScroll);
+    this.addScrollEvent();
   },
   beforeDestroy: function() {
-    window.removeEventListener('scroll', this.setActiveTabChangeByScroll);
+    this.removeScrollEvent();
   }
 };
 </script>

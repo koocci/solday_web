@@ -1,13 +1,13 @@
 <template>
   <div id="Map"  class="components-size">
-    THIS IS Map
+    
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    //
+    map_img: require('@/assets/map.jpg')
   }),
 };
 </script>
